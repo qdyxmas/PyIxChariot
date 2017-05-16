@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<WLANProfile xmlns="http://www.microsoft.com/networking/WLAN/profile/v1">
+	<name>tenda_ganraoceshi</name>
+	<SSIDConfig>
+		<SSID>
+			<hex>74656E64615F67616E72616F6365736869</hex>
+			<name>tenda_ganraoceshi</name>
+		</SSID>
+	</SSIDConfig>
+	<connectionType>ESS</connectionType>
+	<connectionMode>auto</connectionMode>
+	<MSM>
+		<security>
+			<authEncryption>
+				<authentication>open</authentication>
+				<encryption>none</encryption>
+				<useOneX>false</useOneX>
+			</authEncryption>
+		</security>
+	</MSM>
+</WLANProfile>

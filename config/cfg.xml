@@ -1,0 +1,27 @@
+<?xml version="1.0"?> 
+<WLANProfile xmlns="http://www.microsoft.com/networking/WLAN/profile/v1"> 
+<name>cfg</name> 
+<SSIDConfig> 
+<SSID> 
+<name>DUT_24G_TEST</name> 
+</SSID> 
+<nonBroadcast>true</nonBroadcast> 
+</SSIDConfig> 
+<connectionType>ESS</connectionType> 
+<connectionMode>manual</connectionMode> 
+<autoSwitch>false</autoSwitch> 
+<MSM> 
+<security> 
+<authEncryption> 
+<authentication>WPA2PSK</authentication> 
+<encryption>AES</encryption> 
+<useOneX>false</useOneX> 
+</authEncryption> 
+<sharedKey> 
+<keyType>passPhrase</keyType> 
+<protected>false</protected> 
+<keyMaterial>shicaijun123456</keyMaterial> 
+</sharedKey> 
+</security> 
+</MSM> 
+</WLANProfile> 
