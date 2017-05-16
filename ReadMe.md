@@ -1,4 +1,4 @@
-#
+<FRAMESET>
 PyIxChariot模块主要用于通过调用IxChariot脚本测试DUT的吞吐量信息
 1、测试时请保证该目录下有Script目录存放Throughput.scr/Throughputdown.scr
 2、config目录下有无线配置文件
@@ -19,3 +19,4 @@ test
 ├─Script	#Ixchariot 脚本
 │      Throughput.scr
 │      Throughputdown.scr
+</FRAMESET>
