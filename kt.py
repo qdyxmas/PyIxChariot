@@ -2,6 +2,7 @@
 #coding=utf-8
 import time,io,sys,os,re
 from socket import *
+import serial
 class kt():
     def __init__(self,intf="ra0",serverip="",rootdir="./"):
         # 删除多余的配置文件
@@ -195,8 +196,36 @@ class kt():
 # r_code=tc.pingtest(dip="192.168.10.2",maxerr=10,maxsuc=5)
 # r_code=pingtest(dip="192.168.10.2",maxerr=10,maxsuc=5)
 # print r_code
+class ks():
+    def __init__(self,**kargs):
+        brate=38400
+        port="COM1"
+        if kargs.has_key('brate'):
+            brate=kargs['brate']
+        if kargs.has_key('port'):
+            port=kargs['port']
+        self.serial = serial.Serial(port=port, baudrate=brate, bytesize=8, parity=serial.PARITY_NONE, stopbits=1, timeout=None, xonxoff=1, rtscts=0, writeTimeout=None, dsrdtr=None)
+    def config_rssi(self,num):
+        cmd=""
+        self.serial.write(cmd)
+    def sendcmd(self,cmd):
+        cmd=cmd+"\n"
+        # cmd=self.str2bin(cmd)
+        self.serial.write(cmd)
+        time.sleep(0.5)
+    def read_cominfo(self):
+        buffer=''
+        while True:
+            if self.serial.inWaiting():
+                data=self.serial.read(1)
+                buffer=buffer+data
+            else:
+                break
+        return buffer
 if __name__ == "__main__":
-    intf="ra0"
     kargs={"intf":"ra0"}
-    tc=testcfg(intf=intf,serverip="192.168.0.3")
+    s=ks()
+    s.sendcmd("ifconfig")
+    data=s.read_cominfo()
+    print "data=",data
  
