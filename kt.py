@@ -3,6 +3,7 @@
 import time,io,sys,os,re
 from socket import *
 import serial
+
 class kt():
     def __init__(self,intf="ra0",serverip="",rootdir="./"):
         # 删除多余的配置文件
@@ -21,10 +22,10 @@ class kt():
                 if ssid:
                     delcmd="""netsh wlan delete profile name=%s""" %(i.split(":")[-1])
                     os.system(self.cmd_str(delcmd))
-            cfgname=(rootdir+"/config/ra0-tenda_ganraoceshi.xml").replace("\\","/")
+            cfgname=(rootdir+"/config/ra0-ganraoceshi.xml").replace("\\","/")
             print cfgname
             if self.cmdExec:
-                cmd="""netsh wlan add profile filename=c:\\tcpser\\ra0-tenda_ganraoceshi.xml interface=ra0"""
+                cmd="""netsh wlan add profile filename=c:\\tcpser\\ra0-ganraoceshi.xml interface=ra0"""
             else:
                cmd="netsh wlan add profile filename=%s interface=ra0" %(cfgname)
             if not os.system(self.cmd_str(cmd)):
@@ -32,8 +33,9 @@ class kt():
             #
         self.intf=intf;
         # self.index=self.get_register_mac_info()
-    #以下2个为ping函数
+    
     def echoping(self,dip="192.168.0.252",timeout=1,sip=None):
+        #以下2个为ping函数
         if not sip:
             cmd="ping %s -w %s -n 1" %(dip,timeout*1000)
         else:
@@ -93,8 +95,9 @@ class kt():
             return True
         else:
             return False
-    #连接无线函数 调用ra0接口连接无线DUT
+
     def windows_link_wireless(self,**kargs):
+        #连接无线函数 调用ra0接口连接无线DUT
         #以下是配置windows连接无线ssid的命令
         #set cmd "netsh wlan disconnect interface=ra0
         for i in range(0,3):
@@ -104,7 +107,7 @@ class kt():
                 cmd.append("netsh wlan disconnect interface=ra0")
                 cmd.append("netsh interface set interface ra0 disable")
                 cmd.append("netsh interface set interface ra0 enabled")
-                cmd.append("netsh wlan connect name=tenda_ganraoceshi")
+                cmd.append("netsh wlan connect name=test_ganraoceshi")
                 #set cmd "netsh wlan add profile filename=c:\\tcpser\\ra0-cfg.xml interface=ra0"
                 #1、设置配置文件
                 #2、配置配置文件
@@ -130,12 +133,13 @@ class kt():
             except Exception,e:
                 print str(e)
         return False
+
     def windows_cfg_wireless(self,**kargs):
         cmd="netsh wlan set profileparameter "
         #参数配置文件名
         try:
             if 'name' in kargs.keys() and kargs['name'] != "":
-                cmd=cmd+"name=tenda_ganraoceshi "
+                cmd=cmd+"name=test_ganraoceshi "
             if 'intf' in kargs.keys():
                 if not kargs['intf']:
                     kargs['intf'] = self.intf
@@ -157,8 +161,9 @@ class kt():
         except Exception,e:
             print str(e)
             return False
-    #
+
     def send_cmd(self,dip='',funcname='',**kargs):
+        # 发送命令
         host=(dip,6000)
         sendTocmd=funcname+" "
         for key,value in kargs.items():
@@ -205,14 +210,17 @@ class ks():
         if kargs.has_key('port'):
             port=kargs['port']
         self.serial = serial.Serial(port=port, baudrate=brate, bytesize=8, parity=serial.PARITY_NONE, stopbits=1, timeout=None, xonxoff=1, rtscts=0, writeTimeout=None, dsrdtr=None)
+
     def config_rssi(self,num):
         cmd=""
         self.serial.write(cmd)
+
     def sendcmd(self,cmd):
         cmd=cmd+"\n"
         # cmd=self.str2bin(cmd)
         self.serial.write(cmd)
         time.sleep(0.5)
+
     def read_cominfo(self):
         buffer=''
         while True:
@@ -222,10 +230,10 @@ class ks():
             else:
                 break
         return buffer
+
 if __name__ == "__main__":
     kargs={"intf":"ra0"}
     s=ks()
     s.sendcmd("ifconfig")
     data=s.read_cominfo()
     print "data=",data
- 
